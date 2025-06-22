@@ -1,0 +1,10 @@
+[
+  {
+    "provider": "openai",
+    "name": "gpt-o3"
+  },
+  {
+    "provider": "mistralai",
+    "name": ""
+  }
+]

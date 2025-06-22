@@ -1,0 +1,8 @@
+.venv
+.gitignore
+.pyproject.toml
+.python-version
+.ropeproject
+.mypy_cache
+.env
+.env.example
