@@ -11,16 +11,13 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          config.allowUnfree = true; # если вдруг нужен uv из бинарников
+          config.allowUnfree = true;
         };
-
-        python = pkgs.python314;
-
       in {
         devShells.default = pkgs.mkShell {
           name = "python-uv-shell";
           buildInputs = [
-            python
+            pkgs.python313
             pkgs.uv
           ];
 
