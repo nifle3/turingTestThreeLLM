@@ -6,3 +6,9 @@
 .mypy_cache
 .env
 .env.example
+Dockerfile
+compose.yaml
+flake.nix
+flake.lock
+uv.lock
+**/__pycache__

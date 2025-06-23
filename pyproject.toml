@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "langchain[anthropic,google-genai,mistralai,openai]>=0.3.26",
-    "mypy>=1.16.1",
     "rich>=14.0.0",
 ]
 
