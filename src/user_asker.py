@@ -33,8 +33,8 @@ class DefaultUserAsker(UserAsker):
             print(f"{index} - {value}")
 
     def input(self) -> ModelMetadata:
-        user_input = input("Ваш выбор")
-        if not user_input.isdigit():
+        user_input = input("Ваш выбор: ")
+        if not user_input.strip().isdigit():
             raise InvalidInputTypeError()
 
         user_int_input = int(user_input)
