@@ -1,10 +1,13 @@
 from abc import ABC, abstractmethod
+from typing import final
 
 from model_metadata import ModelMetadata
 
+@final
 class InvalidInputIndexError(Exception):
     pass
 
+@final
 class InvalidInputTypeError(Exception):
     pass
 
@@ -21,6 +24,7 @@ class UserAsker(ABC):
     def input(self) -> ModelMetadata:
         pass
 
+@final
 class DefaultUserAsker(UserAsker):
 
     def __init__(self, model_metadatas: list[ModelMetadata]) -> None:

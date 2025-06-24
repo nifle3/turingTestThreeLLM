@@ -55,6 +55,9 @@ def _main() -> None:
     human_player = LangChainPlayer(human_model)
     computer_player = LangChainPlayer(computer_model)
 
+    game = create_game(judge_player, human_player, computer_player)
+    game.play()
+
 def asker_with_retry(asker: UserAsker, title: str) -> ModelMetadata:
     asker.print(title)
     while True:

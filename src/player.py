@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import final
 
 from langchain.chat_models.base import BaseChatModel
 
@@ -6,7 +7,7 @@ from langchain.chat_models.base import BaseChatModel
 class Player(ABC):
     pass
 
-
+@final
 class LangChainPlayer(Player):
     __slots__ = ("__model")
 
