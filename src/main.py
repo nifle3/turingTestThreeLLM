@@ -9,7 +9,7 @@ from langchain_core.language_models.chat_models import BaseChatModel
 
 from judge import Judge, LangChainJudge
 from player import Player, LangChainPlayer
-from game import Game
+from game import Game, GameForTwoPlayer
 from system_prompts import SystemPrompts
 from model_metadata import ModelMetadata
 from user_asker import UserAsker, DefaultUserAsker, InvalidInputIndexError, InvalidInputTypeError
@@ -52,8 +52,8 @@ def _main() -> None:
     computer_model: BaseChatModel = init_chat_model(computer.name, model_provider=computer.provider)
 
     judge_player = LangChainJudge(judge_model)
-    human_player = LangChainPlayer(human_model)
-    computer_player = LangChainPlayer(computer_model)
+    human_player = LangChainPlayer(human_model, system_prompts.human)
+    computer_player = LangChainPlayer(computer_model, system_prompts.computer)
 
     game = create_game(judge_player, human_player, computer_player)
     game.play()
@@ -75,7 +75,7 @@ def create_game(judge: Judge, first_player: Player, second_player: Player) -> Ga
     else:
         players: Tuple[Player, Player] = (second_player, first_player)
 
-    return Game(
+    return GameForTwoPlayer(
         players = players,
         judge = judge
     )

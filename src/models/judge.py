@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import final
 
+from .errors import InvalidOutputLLMError
+
 from langchain.chat_models.base import BaseChatModel
+from langchain_core.messages import BaseMessage, AIMessage, HumanMessage, SystemMessage
 
 @final
 class ResultIsNotReadyError(Exception):
     pass
-
 
 class Judge(ABC):
 
@@ -29,17 +31,36 @@ class Judge(ABC):
 
 @final
 class LangChainJudge(Judge):
-    __slots__ = ("__model", "__result")
+    __slots__ = ("__model", "__result", "__memory")
 
-    def __init__(self, model: BaseChatModel) -> None:
+    def __init__(self, model: BaseChatModel, system_prompt: str) -> None:
+        self.__memory: list[BaseMessage] = [SystemMessage(system_prompt)]
         self.__model: BaseChatModel = model
         self.__result: str | None = None
 
     def init_start_question(self) -> str:
-        raise NotImplementedError()
+        message = self.__model.invoke(self.__memory)
+
+        if not isinstance(message.content, str):
+            raise InvalidOutputLLMError()
+
+        self.__memory.append(AIMessage(message.content))
+
+        return message.content
+
 
     def generate_next_question(self, first_answer: str, second_answer: str) -> str:
-        raise NotImplementedError()
+        self.__memory.append(HumanMessage(f"first - {first_answer}"))
+        self.__memory.append(HumanMessage(f"second - {second_answer}"))
+
+        message = self.__model.invoke(self.__memory)
+
+        if not isinstance(message.content, str):
+            raise InvalidOutputLLMError()
+
+        self.__memory.append(AIMessage(message.content))
+
+        return message.content
 
     def have_result(self) -> bool:
         return self.__result is not None
