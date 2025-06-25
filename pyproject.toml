@@ -97,7 +97,7 @@ line-ending = "lf"
 indent-style = "space"
 
 [tool.mypy]
-exclude=["__pycache__", "venv", ".venv", "build", "dist", ".git", ".mypy_cache", "tests"]
+exclude=["__pycache__", "venv", ".venv", "build", "dist", ".git", ".mypy_cache", "tests", ".mypy_cache", ".ropeproject"]
 python_version = "3.12"
 mypy_path = ["src"]
 strict = true

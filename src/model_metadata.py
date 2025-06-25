@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import final
 
+
 @dataclass
 @final
 class ModelMetadata:

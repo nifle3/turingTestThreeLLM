@@ -1,18 +1,19 @@
-from os import getenv
 import json
-from typing import Any, Tuple
 import logging
+from os import getenv
 from random import randrange
+from typing import Any
 
 from langchain.chat_models import init_chat_model
 from langchain_core.language_models.chat_models import BaseChatModel
 
-from models.judge import Judge, LangChainJudge
-from models.player import Player, LangChainPlayer
 from game import Game, GameForTwoPlayer
-from system_prompts import SystemPrompts
 from model_metadata import ModelMetadata
-from user_asker import UserAsker, DefaultUserAsker, InvalidInputIndexError, InvalidInputTypeError
+from models.judge import Judge, LangChainJudge
+from models.player import LangChainPlayer, Player
+from system_prompts import SystemPrompts
+from user_asker import DefaultUserAsker, InvalidInputIndexError, InvalidInputTypeError, UserAsker
+
 
 def _main() -> None:
     if getenv("APP_ENV", "DEVELOPMENT").upper() == "DEVELOPMENT":
@@ -22,12 +23,12 @@ def _main() -> None:
     logging.basicConfig(level=getenv("LOGGER_LEVEL", "debug").upper())
     logger: logging.Logger = logging.getLogger(__name__)
 
-    with open("system_prompts.json", "r") as file:
+    with open("system_prompts.json") as file:
         data: Any = json.load(file)
 
     system_prompts: SystemPrompts = SystemPrompts(**data)
 
-    with open("model_metadata.json", "r") as file:
+    with open("model_metadata.json") as file:
         model_metadata_json: list[Any] = json.load(file)
 
     model_metadatas: list[ModelMetadata] = []
@@ -58,6 +59,7 @@ def _main() -> None:
     game = create_game(judge_player, human_player, computer_player)
     game.play()
 
+
 def asker_with_retry(asker: UserAsker, title: str) -> ModelMetadata:
     asker.print(title)
     while True:
@@ -68,17 +70,19 @@ def asker_with_retry(asker: UserAsker, title: str) -> ModelMetadata:
         except InvalidInputTypeError:
            print("Вы должны ввести число")
 
+
 def create_game(judge: Judge, first_player: Player, second_player: Player) -> Game:
     rand = randrange(0, 100)
     if rand % 2 == 0:
-        players: Tuple[Player, Player] = (first_player, second_player)
+        players: tuple[Player, Player] = (first_player, second_player)
     else:
-        players: Tuple[Player, Player] = (second_player, first_player)
+        players: tuple[Player, Player] = (second_player, first_player)
 
     return GameForTwoPlayer(
-        players = players,
-        judge = judge
+        players=players,
+        judge=judge
     )
+
 
 if __name__ == "__main__":
     _main()

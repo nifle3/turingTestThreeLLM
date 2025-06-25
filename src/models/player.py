@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import final
 
-from .errors import InvalidOutputLLMError
-
 from langchain.chat_models.base import BaseChatModel
-from langchain_core.messages import HumanMessage, SystemMessage, AIMessage, BaseMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+
+from .errors import InvalidOutputLLMError
 
 
 class Player(ABC):
@@ -13,9 +13,10 @@ class Player(ABC):
     def answer(self, question: str) -> str:
         pass
 
+
 @final
 class LangChainPlayer(Player):
-    __slots__ = ("__model", "__memory")
+    __slots__ = ("__memory", "__model")
 
     def __init__(self, model: BaseChatModel, system_prompt: str) -> None:
         self.__model = model

@@ -1,8 +1,7 @@
-from typing import Tuple
 from abc import ABC, abstractmethod
 
-from models.player import Player
 from models.judge import Judge
+from models.player import Player
 
 
 class Game(ABC):
@@ -13,9 +12,9 @@ class Game(ABC):
 
 
 class GameForTwoPlayer(Game):
-    __slots__ = ("__players", "__judge")
+    __slots__ = ("__judge", "__players")
 
-    def __init__(self, players: Tuple[Player, Player], judge: Judge) -> None:
+    def __init__(self, players: tuple[Player, Player], judge: Judge) -> None:
         self.__players = players
         self.__judge = judge
 

@@ -1,14 +1,16 @@
 from abc import ABC, abstractmethod
 from typing import final
 
+from langchain.chat_models.base import BaseChatModel
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
+
 from .errors import InvalidOutputLLMError
 
-from langchain.chat_models.base import BaseChatModel
-from langchain_core.messages import BaseMessage, AIMessage, HumanMessage, SystemMessage
 
 @final
 class ResultIsNotReadyError(Exception):
     pass
+
 
 class Judge(ABC):
 
@@ -31,7 +33,7 @@ class Judge(ABC):
 
 @final
 class LangChainJudge(Judge):
-    __slots__ = ("__model", "__result", "__memory")
+    __slots__ = ("__memory", "__model", "__result")
 
     def __init__(self, model: BaseChatModel, system_prompt: str) -> None:
         self.__memory: list[BaseMessage] = [SystemMessage(system_prompt)]
@@ -47,7 +49,6 @@ class LangChainJudge(Judge):
         self.__memory.append(AIMessage(message.content))
 
         return message.content
-
 
     def generate_next_question(self, first_answer: str, second_answer: str) -> str:
         self.__memory.append(HumanMessage(f"first - {first_answer}"))
@@ -67,6 +68,6 @@ class LangChainJudge(Judge):
 
     def get_result(self) -> str:
         if self.__result is None:
-            raise ResultIsNotReadyError()
+            raise ResultIsNotReadyError
 
         return self.__result

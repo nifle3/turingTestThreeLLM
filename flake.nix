@@ -19,6 +19,7 @@
           buildInputs = [
             pkgs.python313
             pkgs.uv
+            pkgs.ruff
           ];
 
           shellHook = ''
