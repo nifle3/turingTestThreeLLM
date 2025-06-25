@@ -1,8 +1,8 @@
 from typing import Tuple
 from abc import ABC, abstractmethod
 
-from player import Player
-from judge import Judge
+from models.player import Player
+from models.judge import Judge
 
 
 class Game(ABC):

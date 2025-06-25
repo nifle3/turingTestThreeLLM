@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import final
 
+from .errors import InvalidOutputLLMError
+
 from langchain.chat_models.base import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage, BaseMessage
 

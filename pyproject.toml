@@ -14,4 +14,93 @@ dev = [
     "mypy>=1.16.1",
     "python-dotenv>=1.1.0",
     "ruff>=0.12.0",
+    "wemake-python-styleguide>=1.1.0",
 ]
+
+tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = ["__pycache__", "venv", ".venv", "build", "dist", ".git", ".mypy_cache", "tests"]
+show-fixes = true
+fix = true
+preview = true
+
+[tool.ruff.lint]
+select = [
+    "A005",
+    "A",
+    "B",
+    "C4",
+    "C90",
+    "COM",
+    "D",
+    "DTZ",
+    "E",
+    "ERA",
+    "EXE",
+    "F",
+    "FBT",
+    "FLY",
+    "FURB",
+    "G",
+    "I",
+    "ICN",
+    "ISC",
+    "LOG",
+    "N",
+    "PERF",
+    "PIE",
+    "PL",
+    "PT",
+    "PTH",
+    "Q",
+    "RET",
+    "RSE",
+    "RUF",
+    "S",
+    "SIM",
+    "SLF",
+    "SLOT",
+    "T100",
+    "TRY",
+    "UP",
+    "W",
+    "YTT",
+    "E722",
+    "F841",
+    "C901",
+    "Q000",
+    "TRY003",
+]
+ignore = [
+    "RUF001",
+    "A005",
+    "COM812",
+    "D100",
+    "D104",
+    "D106",
+    "D203",
+    "D212",
+    "D401",
+    "D404",
+    "D405",
+    "PLR09",
+    "PLR2004",
+    "PLR6301",
+]
+
+external = ["WPS"]
+
+[tool.ruff.format]
+quote-style = "double"
+line-ending = "lf"
+indent-style = "space"
+
+[tool.mypy]
+exclude=["__pycache__", "venv", ".venv", "build", "dist", ".git", ".mypy_cache", "tests"]
+python_version = "3.12"
+mypy_path = ["src"]
+strict = true
+namespace_packages = true
+ignore_missing_imports = true
+explicit_package_bases = true

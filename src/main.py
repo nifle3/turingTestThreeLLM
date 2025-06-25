@@ -7,8 +7,8 @@ from random import randrange
 from langchain.chat_models import init_chat_model
 from langchain_core.language_models.chat_models import BaseChatModel
 
-from judge import Judge, LangChainJudge
-from player import Player, LangChainPlayer
+from models.judge import Judge, LangChainJudge
+from models.player import Player, LangChainPlayer
 from game import Game, GameForTwoPlayer
 from system_prompts import SystemPrompts
 from model_metadata import ModelMetadata
@@ -51,7 +51,7 @@ def _main() -> None:
     human_model: BaseChatModel = init_chat_model(human.name, model_provider=human.provider)
     computer_model: BaseChatModel = init_chat_model(computer.name, model_provider=computer.provider)
 
-    judge_player = LangChainJudge(judge_model)
+    judge_player = LangChainJudge(judge_model, system_prompts.judge)
     human_player = LangChainPlayer(human_model, system_prompts.human)
     computer_player = LangChainPlayer(computer_model, system_prompts.computer)
 
