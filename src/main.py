@@ -15,6 +15,7 @@ from models.player import LangChainPlayer, Player
 from system_prompts import SystemPrompts
 from turing_test import TuringTest, TuringTestForTwoPlayer
 from user_asker import DefaultUserAsker
+from printer import RichPrinter
 
 
 def _main() -> None:
@@ -65,9 +66,12 @@ def _main() -> None:
     human_player = LangChainPlayer(human_model, system_prompts.human)
     computer_player = LangChainPlayer(computer_model, system_prompts.computer)
 
-    game = create_game(judge_player, human_player, computer_player)
-    game.start()
+    printer = RichPrinter(Console())
 
+    game = create_game(judge_player, human_player, computer_player)
+    generator = game.start()
+
+    printer.start_output(generator)
 
 def create_game(judge: Judge, first_player: Player, second_player: Player) -> TuringTest:
     """
